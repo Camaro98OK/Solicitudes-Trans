@@ -1,0 +1,44 @@
+<div *ngIf="accionesPermitidas==5 ">
+    <div class="container-lg ">
+        <h1 style="text-align: center ">Catálogo de asuntos</h1>
+        <form class="row g-4" [formGroup]="frmAsunto">
+            <div class="col-md-12 ">
+                <label for="validationServer04 " class="form-label ">Asunto</label>
+                <input type="text " class="form-control is-valid " formControlName="asunto" ngModel required>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Introuce el asunto a tratar.
+                </div>
+            </div>
+            <div class="col-12 ">
+                <button [disabled]="frmAsunto.invalid" pe="submit " class="btn btn-primary" (click)="putAsunto()"><i class="fa-solid fa-pen "></i>  Guardar </button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionFormulario(2) "> Regresar</button>
+            </div>
+        </form>
+    </div>
+    <div class="container-lg ">
+        <h2>Catálogo de asuntos</h2>
+        <div class="container-lg">
+            <mat-form-field>
+                <mat-label>Buscar</mat-label>
+                <input type="text" matInput (keyup)="applyFilter($event, 5)" placeholder="buscar">
+            </mat-form-field>
+
+            <mat-table mat-table [dataSource]="asuntoDataSource">
+                <ng-container *ngFor="let col of asuntoTitulos" matColumnDef="{{col}}">
+                    <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let index">
+                        <div *ngIf="col=='Acciones'">
+                            <button type="button " class="btn btn-primary" (click)="obtieneAsuntoSeleccionado(index)"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                        <div *ngIf="col!='Acciones'">
+                            {{element[col]}}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="asuntoTitulos"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: asuntoTitulos;"></mat-row>
+            </mat-table>
+            <mat-paginator [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"> </mat-paginator>
+        </div>
+    </div>
+</div>

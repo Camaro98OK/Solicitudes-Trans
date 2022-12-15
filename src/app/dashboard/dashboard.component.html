@@ -1,0 +1,383 @@
+<div *ngIf="accionesPermitidas==1">
+    <br>
+    <div class="container-lg">
+        <h1 style="text-align: center ">Administración de solicitudes de transparencia</h1>
+        <form class="row g-4" [formGroup]="frmSolicitud">
+            <div *ngIf="editando == false" class="row">
+                <div class="col-md-2">
+                    <label for="validationServer01" class="form-label">Fecha de envio UTAG</label>
+                    <div class="md-form md-outline input-with-post-icon datepicker">
+                        <input placeholder="Select date" type="date" id="fechaEnvUTAG" class="form-control" formControlName="fechaEnvUTAG" required>
+                        <div class="invalid-feedback">
+                            * Selecciona la fecha
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">Horas</label>
+                    <select class="form-control" formControlName="horaEnvUTAG" name="horaEnvUTAG">
+                        <option *ngFor="let item of horasDia" [value]="item">{{item}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Introduce la hora del evento
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">Minutos</label>
+                    <select class="form-control" formControlName="minutosEnvUTAG">
+                      <option *ngFor="let item of minutosHora" [value]="item">{{item}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Introduce la hora del evento
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="validationServer01" class="form-label">Folio</label>
+                    <input type="text" id="folioSol" formControlName="folioSol" value="012345678912345" class="form-control">
+                    <div class="valid-feedback">
+                        Introduce el folio
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="editando == true">
+                <div class="col-md-2" style="padding-top: 5px;">
+                    <label class="form-label" *ngIf="editando == true" style="text-align: center; font-size: 18px; color: blue;">Fecha UTAG: {{lbFecha}} </label>
+                </div>
+                <div class="col-md-2" style="padding-top: 5px;">
+                    <label class="form-label" *ngIf="editando == true" style="text-align: center; font-size: 18px; color: blue;">Hora: {{lbHora}} </label>
+                </div>
+                <div class="col-md-2" style="padding-top: 5px;">
+                    <label class="form-label" *ngIf="editando == true" style="text-align: center; font-size: 18px; color: blue;">Minuto: {{lbMin}} </label>
+                </div>
+                <div class="col-md-2" style="padding-top: 5px;">
+                    <label class="form-label" *ngIf="editando == true" style="text-align: center; font-size: 18px; color: blue;">Folio: {{miFoliocorreo}} </label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Solicitud de información</label>
+                <select id="tipoSolicitud" formControlName="tipoSolicitud" class="form-control">
+                    <option selected disabled value="">Seleccionar ...</option>
+                    <option [value]="i.id" *ngFor="let i of ItipoSolicitud">{{i.solicitud}}</option>
+                </select>
+                <div id="validationServer04Feedback" class="invalid-feedback">
+                    Introduce el tipo de solicitud de información.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Estatus de la Solicitud</label>
+                <select id="estatusSol" formControlName="estatusSol" aria-describedby="validationServer04Feedback" class="form-control">
+                        <option selected disabled value="">Seleccionar ...</option>
+                        <option [value]="i.id" *ngFor="let i of IestatusSolicitud">{{i.estatus_dsc}}</option>
+                </select>
+                <div id="validationServer04Feedback" class="invalid-feedback">
+                    Selecciona el estatus de la solicitud.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Tema de la solicitud</label>
+                <select (change)="getSubTema()" id="estatusSol" formControlName="temaSol" aria-describedby="validationServer04Feedback" class="form-control">
+                      <option selected disabled value="">Seleccionar ...</option>
+                      <option [value]="i.id" *ngFor="let i of Itemas">{{i.Tema}}</option>
+              </select>
+                <div id="validationServer04Feedback" class="invalid-feedback">
+                    Selecciona el estatus de la solicitud.
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Subtema de la Solicitud</label>
+                <select id="estatusSol" formControlName="subTemaSol" aria-describedby="validationServer04Feedback" class="form-control">
+                    <option selected disabled value="">Seleccionar ...</option>
+                    <option [value]="i.id" *ngFor="let i of IsubTemas">{{i.Subtema}}</option>
+                </select>
+                <div id="validationServer04Feedback" class="invalid-feedback">
+                    Selecciona el estatus de la solicitud.
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label for="validationServer02" class="form-label">Solicitud</label>
+                <input type="text" id="Solicitud" formControlName="Solicitud" value="" class="form-control">
+                <div class="valid-feedback">
+                    Introduce la descripción de la solicitud
+                </div>
+            </div>
+            <!--             <div class="col-md-6">
+                <label class="form-label">Asunto</label>
+                <select id="asuntoSol" formControlName="asuntoSol" aria-describedby="validationServer04Feedback" class="form-control">
+            <option selected disabled value="Acuerdos reparatorios">Seleccionar ...</option>
+                    <option [value]="i.id" *ngFor="let i of IasuntoSolicitud">{{i.asunto}}</option>
+          </select>
+                <div id="validationServer04Feedback" class="invalid-feedback">
+                    Introduce el tipo de asunto
+                </div>
+            </div>
+ -->
+            <div class="col-md-6">
+                <label for="validationServer02" class="form-label">Observaciones</label>
+                <input type="text" id="observacionSol" value="observacionSol" class="form-control" formControlName="observacionSol">
+                <div class="valid-feedback">
+                    Introduce las observaciones
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" (click)="insSolicitudes()" [disabled]="frmSolicitud.invalid"><i class="fa-solid fa-pen"></i>  Guardar</button>
+                <!--                 <button class="btn btn-primary"><i class="fa-solid fa-trash"></i>  Eliminar</button> -->
+                <button class="btn btn-primary" (click)="navegacionFormulario(2)" [disabled]="editando == false"><i class="fa-solid fa-envelope"></i>  Correos</button>
+                <!--                  <button class="btn btn-primary" (click)="navegacionFormulario(6)"><i class="fa-solid fa-rotate"></i>  Seguimiento</button> -->
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+
+    <div class="container-lg">
+        <h2 style="text-align: center">Historial de solicitudes de transparencia</h2>
+        <hr width="100%" size="5px" color="darkblue">
+        <div class="container-lg" id="TotSol">
+            <mat-table mat-table [dataSource]="solTotalSolicitudes" class="TotSol">
+                <ng-container *ngFor="let col of totalesSolicitudeTitulos" matColumnDef="{{col}}">
+                    <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let index">
+                        <div *ngIf="col=='Acciones'">
+                            <button type="button " class="btn btn-primary" (click)="exportaDatosExcel()"><i class="fa-sharp fa-solid fa-file-excel"></i></button>
+                        </div>
+                        <div *ngIf="col!='Acciones'">
+                            {{element[col]}}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="totalesSolicitudeTitulos"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: totalesSolicitudeTitulos;"></mat-row>
+            </mat-table>
+        </div>
+        <br>
+    </div>
+
+    <div class="container-lg">
+        <mat-form-field>
+            <mat-label>Buscar</mat-label>
+            <input type="text" matInput (keyup)="applyFilter($event, 1)" placeholder="buscar">
+        </mat-form-field>
+
+        <mat-table mat-table [dataSource]="solTransDataSource" matSort id="excel-table">
+            <ng-container *ngFor="let col of solTransTitulos" matColumnDef="{{col}}">
+                <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+                <mat-cell *matCellDef="let element; let index; let row">
+                    <div *ngIf="col=='Acciones'">
+                        <button type="button " class="btn btn-primary" (click)="obtieneRegistroSeleccionado(index)"><i class="fa-solid fa-pen"></i></button>
+                        <!--                             <button type="button " class="btn btn-primary" navegacionFormulario(2) ><i class="fa-solid fa-envelope"></i></button> -->
+                    </div>
+                    <div *ngIf="col=='Solicitud_Terminada' && element == 'NULL' ? '-' : element">
+                        {{element[col]}}
+                    </div>
+                    <!--                     <div *ngIf="col!='Solicitud_Terminada' || 'Acciones'">
+                        {{element[col]}}
+                    </div>
+ -->
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="solTransTitulos"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: solTransTitulos;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"> </mat-paginator>
+    </div>
+</div>
+<div *ngIf="accionesPermitidas==2 ">
+    <app-datos-dashboard [folPadre]="miFoliocorreo" [moduloSeleccionado]="accionesPermitidas" (regresoPrincipal)="navegacionFormulario($event)"></app-datos-dashboard>
+</div>
+<!--
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-chart-simple "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-circle-down "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-envelope "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-pen-to-square "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-plus "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-minus "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-thumbs-up "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-thumbs-down "></i></button>
+<button type="button " class="btn btn-primary "><i class="fa-solid fa-users "></i></button>
+ -->
+<!--
+<div *ngIf="accionesPermitidas==6 ">
+    <hr width="100% " size="5px " color="blue ">
+    <div class="container-lg ">
+        <h1 style="text-align: center ">Seguimiento de solicitudes de información entre áreas</h1>
+        <form class="row g-4 ">
+            <div class="col-md-3 ">
+                <label for="validationServer01 " class="form-label ">Fecha UTAG</label>
+                <div class="md-form md-outline input-with-post-icon datepicker ">
+                    <input placeholder="Select date " type="date " id="example " class="form-control ">
+                    <div class="valid-feedback ">
+                        * Selecciona la fecha
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <label for="validationServer01 " class="form-label ">Folio</label>
+                <input type="text " class="form-control is-valid " id="validationServer01 " value="012345678912345 " required>
+                <div class="valid-feedback ">
+                    Introduce el folio
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <label for="validationServer04 " class="form-label ">Remitente</label>
+                <select id="validationServer04 ">
+                <option selected disabled value=" ">Selecciona ...</option>
+                <option value="1 ">Arreguin Karla Ivet</option>
+                <option value="1 ">Ayerim Jiménez Flores</option>
+                <option value="1 ">Carrillo Contreras Norma Angelica</option>
+                <option value="1 ">Cuevas Jimenez Ramiro</option>
+                <option value="1 ">Delgado Antunez Brian Ivan</option>
+                <option value="1 ">Diaz Martinez Maria Luisa</option>
+                <option value="1 ">Galicia Fuentes Miranda</option>
+                <option value="1 ">Gonzalez Andrade Gustavo Yair</option>
+                <option value="1 ">Gonzalez Estrada Juan Carlos</option>
+                <option value="1 ">Guzman Arreguin Karla Ivet</option>
+                <option value="1 ">Hernandez Velazquez Dulce Jozeline</option>
+                <option value="1 ">Isunza Vargas Fernanda Jazmin</option>
+                <option value="1 ">Jimenez Flores Ayerim</option>
+                <option value="1 ">José Ricardo Beltrán Baños</option>
+                <option value="1 ">Karla Ivet Guzmán Arreguin</option>
+                <option value="1 ">Macias Vega Carlos Manuel</option>
+                <option value="1 ">Muñoz Cruz Isela</option>
+                <option value="1 ">Muñoz Mendoza Luis Fernando</option>
+                <option value="1 ">Najera Cayetano Araceli</option>
+                <option value="1 ">Olguin Lopez Fernanda Madai</option>
+                <option value="1 ">Perez Castillo Christian</option>
+                <option value="1 ">Cuevas Jimenez Ramiro</option>
+                <option value="1 ">Beltran Baños Jose Ricardo</option>
+                <option value="1 ">Diana Luz Monserrat Rivera Guzmán</option>
+                <option value="1 ">Edith Olivares Martínez</option>
+                <option value="1 ">Edmundo I. García Aviles</option>
+                <option value="1 ">Hernandez Velazquez Dulce Jozeline</option>
+                <option value="1 ">Jesús Ramírez Romero</option>
+                <option value="1 ">José Luis Gonzáles García</option>
+                <option value="1 ">Macias Vega Carlos Manuel</option>
+                <option value="1 ">Muñoz Mendoza Luis Fernando</option>
+                <option value="1 ">Nohemi Aguilar Navarrete</option>
+                <option value="1 ">Olguin Lopez Fernanda Madai</option>
+                <option value="1 ">Sergio Paz González</option>
+                <option value="1 ">Rodriguez Nava Rosa</option>
+                <option value="1 ">Cuevas Jimenez Ramiro</option>
+                <option value="1 ">Loza Barrera Adi</option>
+                <option value="1 ">Eréndira Torres Ramírez</option>
+        </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el remitente.
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <label for="validationServer04 " class="form-label ">Destinatario</label>
+                <select id="validationServer04 ">
+            <option selected disabled value=" ">Selecciona ...</option>
+            <option value="1 ">Beltran Baños Jose Ricardo</option>
+            <option value="1 ">Diaz Martinez Maria Luisa</option>
+            <option value="1 ">Ing. Fritz Corona Juan Mateo</option>
+            <option value="1 ">Transparencia SIER</option>
+            <option value="1 ">Eréndira Torres Ramírez</option>
+        </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el destinatario.
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <label for="validationServer04 " class="form-label ">Seguimiento entre áreas</label>
+                <select id="validationServer04 ">
+            <option selected disabled value=" ">Selecciona ...</option>
+            <option value="1 ">SOLICITUD QUE ENVÍA LA UTAG A LA CPA</option>
+            <option value="1 ">SOLICITUD RECIBIDA POR LA CPA Y QUE DIRIGE AL SIER</option>
+            <option value="1 ">SIER SOLICITA A LA TITULAR DE LA DGPPE  LA ATENCIÓN DE LA SOLICITUD</option>
+            <option value="1 ">RESPUESTA QUE LA DGPPE REMITE A LA CPA</option>
+            <option value="1 ">RESPUESTA PARA SU VALIDACIÓN</option>
+            <option value="1 ">ENVÍO DE LA RESPUESTA VALIDADA</option>
+        </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el seguimiento correspondiente.
+                </div>
+            </div>
+
+            <div class="col-12 ">
+                <button type="submit " class="btn btn-primary "><i class="fa-solid fa-pen "></i>  Guardar</button>
+                <button type="submit " class="btn btn-primary "><i class="fa-solid fa-trash "></i>  Eliminar</button>
+                <button type="submit " class="btn btn-primary "><i class="fa-solid fa-users "></i>  Remitentes</button>
+                <button type="submit " class="btn btn-primary "><i class="fa-solid fa-users "></i>  Destinatarios</button>
+                <button type="submit " class="btn btn-primary " (click)="navegacionFormulario(1) "> Regresar</button>
+            </div>
+        </form>
+    </div>
+    <hr width="100% " size="5px " color="red ">
+    <div class="container-lg ">
+        <h2>Seguimiento de solicitudes de información</h2>
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col ">Fecha</th>
+                    <th scope="col ">Folio</th>
+                    <th scope="col ">Remitente</th>
+                    <th scope="col ">Destinatario</th>
+                    <th scope="col ">Seguimiento entre áreas</th>
+                    <th scope="col ">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary ">
+                    <th scope="row ">10/01/22 </th>
+                    <th scope="row ">330024621000979</th>
+                    <th scope="row ">Muñoz Mendoza Luis Fernando</th>
+                    <th scope="row ">Beltran Baños Jose Ricardo</th>
+                    <th scope="row ">SOLICITUD QUE ENVÍA LA UTAG A LA CPA</th>
+                    <th scope="row ">
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-pen "></i></button>
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-trash "></i></button>
+                    </th>
+                </tr>
+                <tr class="table-secondary ">
+                    <th scope="row ">10/01/22 </th>
+                    <th scope="row ">330024621000979</th>
+                    <th scope="row ">Cuevas Jimenez Ramiro</th>
+                    <th scope="row ">Ing. Fritz Corona Juan Mateo</th>
+                    <th scope="row ">SOLICITUD RECIBIDA POR LA CPA Y QUE DIRIGE AL SIER</th>
+                    <th scope="row ">
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-pen "></i></button>
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-trash "></i></button>
+                    </th>
+                </tr>
+                <tr class="table-success ">
+                    <th scope="row ">10/01/22 </th>
+                    <th scope="row ">330024621000979</th>
+                    <th scope="row ">José Luis González García</th>
+                    <th scope="row ">Cuevas Jimenez Ramiro</th>
+                    <th scope="row ">RESPUESTA QUE LA DGPPE REMITE A LA CPA</th>
+                    <th scope="row ">
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-pen "></i></button>
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-trash "></i></button>
+                    </th>
+                </tr>
+                <tr class="table-danger ">
+                    <th scope="row ">10/01/22 </th>
+                    <th scope="row ">330024621000979</th>
+                    <th scope="row ">Rodriguez Nava Rosa</th>
+                    <th scope="row ">Fritz Corona Juan Mateo</th>
+                    <th scope="row ">RESPUESTA PARA SU VALIDACIÓN</th>
+                    <th scope="row ">
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-pen "></i></button>
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-trash "></i></button>
+                    </th>
+                </tr>
+                <tr class="table-warning ">
+                    <th scope="row ">10/01/22 </th>
+                    <th scope="row ">330024621000979</th>
+                    <th scope="row ">Eréndira Torres Ramírez</th>
+                    <th scope="row ">Beltran Baños Jose Ricardo</th>
+                    <th scope="row ">ENVÍO DE LA RESPUESTA VALIDADA</th>
+                    <th scope="row ">
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-pen "></i></button>
+                        <button type="button " class="btn btn-primary "><i class="fa-solid fa-trash "></i></button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+ -->

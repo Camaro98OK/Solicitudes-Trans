@@ -1,0 +1,42 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">S</button>
+        <div class="logo-text" *ngIf="collapsed">SIER</div>
+        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    <!--
+    <ul class="sidenav-nav">
+        <i class="sidenav-nav-item" *ngFor="let i of navData">
+      <a class="sidenav-nav-link" [routerLink]="i.routelink"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}"
+      >
+        <i class="sidenav-link-icon" [class]="i.icon"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{i.label}}</span>
+        </a>
+        </i>
+    </ul>
+     -->
+    <div class="scrollwrap scrollwrap-delay">
+        <ul class="sidenav-nav">
+            <li class="sidenav-nav-item" *ngFor="let i of navData">
+                <a class="sidenav-nav-link" (click)="handleClick(i)" *ngIf="i.items && i.items.length > 0" [ngClass]="getActiveClass(i)">
+                    <i class="sidenav-link-icon" [class]="i.icon"></i>
+                    <span class="sidenav-link-text" *ngIf="collapsed">{{i.label}}</span>
+                    <i *ngIf="i.items && collapsed" class="menu-collpse-icon" [ngClass]="!i.expanded ? 'fa-solid fa-circle-up' : 'fa-solid fa-circle-down'">
+            ></i>
+                </a>
+                <a class="sidenav-nav-link" *ngIf="!i.items || (i.items && i.items.length === 0)" [routerLink]="i.routelink" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="shrinkItems(i)">
+                    <i class="sidenav-link-icon" [class]="i.icon"></i>
+                    <span class="sidenav-link-text" *ngIf="collapsed">{{i.label}}</span>
+                </a>
+                <div *ngIf="collapsed && i.items && i.items.length > 0">
+                    <app-sublevel-menu [data]="i" [collapsed]="collapsed" [multiple]="multiple" [expanded]="i.expanded">
+                    </app-sublevel-menu>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

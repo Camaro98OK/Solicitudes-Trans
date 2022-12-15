@@ -1,0 +1,52 @@
+<div class="container-lg ">
+    <h1 style="text-align: center ">Administración de Seguimiento entre áreas</h1>
+    <form class="row g-4" [formGroup]="frmSeguimiento">
+        <div class="col-md-6 ">
+            <label for="validationServer04 " class="form-label ">Descripción</label>
+            <input type="text " class="form-control is-valid" formControlName="solicitud_dsc">
+            <div id="validationServer04Feedback " class="invalid-feedback ">
+                Introduce la descripción del movimiento entre áreas.
+            </div>
+        </div>
+
+        <div class="col-md-2 ">
+            <label for="validationServer04 " class="form-label ">Ordenamiento</label>
+            <input type="text " class="form-control is-valid" formControlName="orden">
+            <div id="validationServer04Feedback " class="invalid-feedback ">
+                Introduce el orden de aparición entre áreas.
+            </div>
+        </div>
+
+        <div class="col-12 ">
+            <button type="submit " class="btn btn-primary" (click)="putAreasSeguimiento()"><i class="fa-solid fa-pen "></i>  Guardar</button>
+            <button type="submit " class="btn btn-primary" (click)="navegacionFormulario(2) "> Regresar</button>
+        </div>
+    </form>
+</div>
+<hr width="100% " size="5px " color="red ">
+<div class="container-lg ">
+    <h2>Historial de seguimiento entre áreas</h2>
+    <div class="container-lg">
+        <mat-form-field>
+            <mat-label>Buscar</mat-label>
+            <input type="text" matInput (keyup)="applyFilter($event, 3)" placeholder="buscar">
+        </mat-form-field>
+
+        <mat-table mat-table [dataSource]="seguimientoTransDataSource">
+            <ng-container *ngFor="let col of areasTitulos" matColumnDef="{{col}}">
+                <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+                <mat-cell *matCellDef="let element; let index">
+                    <div *ngIf="col=='Acciones'">
+                        <button type="button " class="btn btn-primary" (click)="obtieneRegistroSeleccionado(index)"><i class="fa-solid fa-pen"></i></button>
+                    </div>
+                    <div *ngIf="col!='Acciones'">
+                        {{element[col]}}
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="areasTitulos"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: areasTitulos;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"> </mat-paginator>
+    </div>
+</div>

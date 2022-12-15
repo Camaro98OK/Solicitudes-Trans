@@ -1,0 +1,190 @@
+<div *ngIf="moduloSeleccionado==2">
+    <div class="container-lg ">
+        <form class="row g-4" [formGroup]="frmCorreos">
+            <div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="text-align: center; font-size: 20px; color: blue;">Administración de correos</th>
+                            <th scope="row " style="text-align: right; font-size: 20px; color: red"><label class="form-label">Folio: {{folPadre}} </label>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3 ">
+                <label class="form-label ">Fecha de correo</label>
+                <div class="md-form md-outline input-with-post-icon datepicker ">
+                    <input formControlName="fecha_correo" type="date" id="fechaCorreo" class="form-control" ngModel required>
+                    <div class="valid-feedback ">
+                        * Selecciona la fecha
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label class="form-label">Horas</label>
+                <select class="form-control" formControlName="horaCorreo" ngModel required>
+              <option *ngFor="let item of horasDia" [value]="item">{{item}}</option>
+            </select>
+                <div class="invalid-feedback">
+                    Introduce la hora del evento
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label class="form-label">Minutos</label>
+                <select class="form-control" formControlName="minutoCorreo" ngModel required>
+              <option *ngFor="let item of minutosHora" [value]="item">{{item}}</option>
+            </select>
+                <div class="invalid-feedback">
+                    Introduce la hora del evento
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <label for="validationServer04 " class="form-label ">Tipo de correo</label>
+                <select class="form-control" formControlName="tipo_correo" id="validationServer04 " ngModel required>
+                  <option selected disabled value=" ">Seleccionar ...</option>
+                  <option *ngFor="let i of ItipoCorreo" [value]="i.id">{{i.tipo_correo}}</option>
+                </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Introduce el tipo de correo
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="solicitudTer">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Terminar solicitud
+          </label>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <label for="validationServer04 " class="form-label ">Remitente</label>
+                <select class="form-control" formControlName="remitente_id" id="validationServer04 " ngModel required>
+                      <option selected disabled value=" ">Seleccionar ...</option>
+                      <option *ngFor="let i of Iremitentes" [value]="i.id">{{i.Nombre}}</option>
+              </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el remitente.
+                </div>
+            </div>
+            <div class="col-md-12 ">
+                <label for="validationServer04 " class="form-label ">Asunto</label>
+                <select class="form-control" formControlName="asunto" id="validationServer04 " ngModel required>
+                      <option selected disabled value=" ">Seleccionar ...</option>
+                      <option *ngFor="let i of Iasunto" [value]="i.id">{{i.Asunto}}</option>
+              </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el asunto de la solicitud.
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <label for="validationServer04 " class="form-label ">Destinatario</label>
+                <select class="form-control" formControlName="destinatario_id" id="validationServer04 " ngModel required>
+                  <option selected disabled value=" ">Seleccionar ...</option>
+                  <option *ngFor="let i of Idestinatario" [value]="i.id">{{i.Nombre}} </option>
+              </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el destinatario.
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <label for="validationServer04 " class="form-label ">Seguimiento entre áreas</label>
+                <select class="form-control" formControlName="seguimiento_id" id="validationServer04 " ngModel required>
+                  <option selected disabled value=" ">Selecciona ...</option>
+                  <option *ngFor="let i of Iseguimiento" [value]="i.id">{{i.solicitud_dsc}} </option>
+              </select>
+                <div id="validationServer04Feedback " class="invalid-feedback ">
+                    Selecciona el seguimiento correspondiente.
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="solDuplicado" formControlName="solDuplicado">
+                    <label class="form-check-label" for="flexCheckDefault">
+                  Solicitud duplicada
+                </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="solComplemento" formControlName="solComplemento">
+                    <label class="form-check-label" for="flexCheckChecked">
+                  Solicitud complementaria
+                </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="solComplemento" formControlName="sol_Cancelada">
+                    <label class="form-check-label" for="flexCheckChecked">
+                  Solicitud cancelada
+                </label>
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <label for="validationServer01" class="form-label">Recurso de revisión</label>
+                <input type="text" id="recursoRev" formControlName="recursoRev" value="" class="form-control">
+                <div class="valid-feedback">
+                    Introduce el recurso de revisión
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label class="form-label">Días hábiles</label>
+                <select class="form-control" formControlName="diasHabiles">
+              <option *ngFor="let item of diasHabiles" [value]="item">{{item}}</option>
+            </select>
+                <div class="invalid-feedback">
+                    Introduce los días hábiles
+                </div>
+            </div>
+
+            <div class="col-12 ">
+                <button [disabled]="frmCorreos.invalid" type="submit " class="btn btn-primary" (click)="insSolicitudCorreo()"><i class="fa-solid fa-pen "></i>  Guardar</button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionInterna(3) "><i class="fa-solid fa-users "></i>  Remitentes</button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionInterna(4) "><i class="fa-solid fa-users "></i>  Destinatarios</button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionInterna(5) "><i class="fa-solid fa-signature "></i>  Asunto</button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionInterna(6) "><i class="fa-solid fa-signature "></i>  Seguimiento Áreas</button>
+                <button type="submit " class="btn btn-primary" (click)="navegacionFormulario(1) "> Regresar</button>
+            </div>
+        </form>
+
+        <hr width="100% " size="5px " color="red ">
+        <div class="container-lg ">
+            <h2>Administración de correos relacionados con solicitudes de información</h2>
+            <div class="container-lg">
+
+                <mat-form-field>
+                    <mat-label>Buscar</mat-label>
+                    <input type="text" matInput (keyup)="applyFilter($event, 2)" placeholder="buscar">
+                </mat-form-field>
+
+                <mat-table mat-table [dataSource]="correosDataSource">
+                    <ng-container *ngFor="let col of correosTitulos" matColumnDef="{{col}}">
+                        <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+                        <mat-cell *matCellDef="let element; let index">
+                            <div *ngIf="col=='Acciones'">
+                                <button type="button " class="btn btn-primary" (click)="getDatosTablaCorreos(index)"><i class="fa-solid fa-pen"></i></button>
+                            </div>
+                            <div *ngIf="col!='Acciones'">
+                                {{element[col]}}
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="correosTitulos"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: correosTitulos;"></mat-row>
+                </mat-table>
+                <mat-paginator [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"> </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="moduloSeleccionado==3 ">
+    <app-remitente (regresaCorreo)="navegacionInterna($event)"></app-remitente>
+</div>
+<div *ngIf="moduloSeleccionado==4 ">
+    <app-destinatario (accionRegreso)="navegacionInterna($event)"></app-destinatario>
+</div>
+<div *ngIf="moduloSeleccionado==5 ">
+    <app-asunto (accionRegreso)="navegacionInterna($event)"></app-asunto>
+</div>
+<div *ngIf="moduloSeleccionado==6 ">
+    <app-seguimiento (regresaSeguimiento)="navegacionInterna($event)"></app-seguimiento>
+    <!--     , (actualizaCatalogo)="actualizaCatalogos($event)" -->
+</div>

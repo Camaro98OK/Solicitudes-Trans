@@ -1,0 +1,29 @@
+.btn-primary {
+    margin-left: 10px;
+    display: flexbox;
+}
+
+.mat-header-cell {
+    height: 1.375rem;
+    background: #59abfd;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+.mat-cell {
+    background: #fff;
+    color: black;
+    font-size: 11px;
+    text-align: center;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+    border: solid red 2px;
+}
+
+input.ng-valid,
+select.ng-valid {
+    border: solid 2px #0d6efd;
+}
